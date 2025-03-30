@@ -92,7 +92,21 @@ public class SolarSystemSimulation : MonoBehaviour
 
     void Velocity(float dt)
     {
-  
+        
+            Vector3[] accOld = ComputeAccelerations();
+
+            for (int i = 0; i < bodies.Count; i++)
+            {
+                bodies[i].position += bodies[i].velocity * dt + 0.5f * accOld[i] * dt * dt;
+            }
+
+            Vector3[] accNew = ComputeAccelerations();
+
+            for (int i = 0; i < bodies.Count; i++)
+            {
+                bodies[i].velocity += 0.5f * (accOld[i] + accNew[i]) * dt;
+            }
+        
     }
 
     Vector3[] ComputeAccelerations()
